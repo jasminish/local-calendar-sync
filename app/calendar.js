@@ -3,7 +3,7 @@ var calendar = google.calendar('v3');
 var authClient = require('./auth').client;
 
 var getData = function(req, res) {
-    authClient.credentials = JSON.parse(req.cookies.authTokens);
+    authClient.credentials = req.session.tokens;
     var data = calendar.events.list({
         auth: authClient,
         calendarId: 'primary',
