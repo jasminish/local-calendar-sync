@@ -4,6 +4,9 @@ var authClient = require('./auth').client;
 
 var getData = function(req, res) {
     authClient.credentials = req.session.tokens;
+    var startDate = req.query.startDate; 
+    var endDate = req.query.endDate; 
+
     var data = calendar.events.list({
         auth: authClient,
         calendarId: 'primary',
@@ -12,8 +15,20 @@ var getData = function(req, res) {
             console.log('API error: ' + err);
             return;
         }
+
+        var result = response.items; 
+        if (startDate) {
+            result = result.filter(function(entry) {
+                return entry.startDate >= startDate; 
+            });
+        }
+        if (endDate) {
+            result = result.filter(function(entry) {
+                return entry.endDate <= endDate;
+            });
+        }
         res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(response.items, null, 3));
+        res.send(JSON.stringify(result, null, 3));
     });
 };
 
