@@ -1,6 +1,7 @@
 var authClient = require('./auth').client;
 var authUrl = require('./auth').authUrl;
 var calendar = require('./calendar');
+var cache = require('express-redis-cache')();
 
 module.exports = function(app) {
     app.get('/', isAuthenticated, function(req, res){
@@ -15,17 +16,17 @@ module.exports = function(app) {
         var code = req.query.code;
         authClient.getToken(code, function(err, tokens){
             authClient.credentials = tokens;
-            req.session.tokens = tokens;
+            req.session.tokens = tokens; // save token in req.session
             res.redirect('/calendar-events');
         });
     });
 
     app.get('/logout', function(req, res) {
-        req.session.destroy();
+        req.session.destroy(); // remove tokens 
         res.redirect('/login');
     });
 
-    app.get('/calendar-events', isAuthenticated, calendar.data);
+    app.get('/calendar-events', [isAuthenticated, cache.route({ type: 'JSON' })], calendar.data);
 };
 
 function isAuthenticated(req, res, next) {

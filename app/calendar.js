@@ -19,14 +19,15 @@ var getData = function(req, res) {
         var result = response.items; 
         if (startDate) {
             result = result.filter(function(entry) {
-                return entry.startDate >= startDate; 
+                return entry.start.dateTime >= startDate; 
             });
         }
         if (endDate) {
             result = result.filter(function(entry) {
-                return entry.endDate <= endDate;
+                return entry.end.dateTime <= endDate;
             });
         }
+
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(result, null, 3));
     });
