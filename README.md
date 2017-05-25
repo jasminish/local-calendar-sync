@@ -1,5 +1,5 @@
 # gt-local-calendar-sync
-A simple calendar syncing system that keeps a local cache of calendar events that sync to Google Calendar API, using (express-redis-cache)[https://www.npmjs.com/package/express-redis-cache].
+A simple calendar syncing system that keeps a local cache of calendar events that sync to Google Calendar API, using [express-redis-cache](https://www.npmjs.com/package/express-redis-cache).
 
 The cache will persist beyond server restarts and response GET request returns JSON. 
 
