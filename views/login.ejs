@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <head>
   <title>Local Calendar Sync</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+  <style>
+    .container { 
+      display: table;
+      height: 95vh;
+      width: 100%;
+    }
+    .login { 
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    }
+    a, a:visited, a:active {
+      font-family: 'Roboto'; 
+      font-weight: 300; 
+      color: #000; 
+      font-size: 30px; 
+      text-decoration: none; 
+    }
+    a:hover {
+      border-bottom: 2px solid #000;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>Login <a href=<%= url %>>here</a></h1>
+    <div class="login">
+      <a href=<%= url %>>LOGIN WITH GOOGLE</a>
+    </div>
   </div>
 </body>
 </html>   

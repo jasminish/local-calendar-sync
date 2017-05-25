@@ -1,14 +1,7 @@
 # gt-local-calendar-sync
-A simple calendar syncing system that keeps a local cache of calendar events that sync to Google Calendar API.
+A simple calendar syncing system that keeps a local cache of calendar events that sync to Google Calendar API, using (express-redis-cache)[https://www.npmjs.com/package/express-redis-cache].
 
-Devise and implement a simple cache system that allows an endpoint that serves a list of calendar events from a logged in user's Google calendar while limiting the number of API hits to Google Calendar by holding a local cache of events.
-
-## Guidelines
-1. The cache can be built in any way you see fit as long as it persistants beyond server restarts.
-2. Response of GET request should return JSON
-
-## Requirements
-The server should respond to the following request via JSON in the format of the sample output below
+The cache will persist beyond server restarts and response GET request returns JSON. 
 
 ### GET /calendar-events
 * If the user is not logged in, redirect to login page for Google Calendar to authorize user. After auth, redirect to /calendar-events endpoint
@@ -79,7 +72,16 @@ The server should respond to the following request via JSON in the format of the
 ```
 
 ## Running the Project
-1. Install node.js and npm
+1. Install node.js and redis
+2. Obtain a google client ID and google client secret from [here](https://console.developers.google.com/flows/enableapi?apiid=calendar)
 2. CD into directory and run 'npm install'
-3. Run 'npm run start'
-4. Go to browser and navigate to http://localhost:3007/ for Hello World
+3. create a file called ```.env``` and input 
+
+  ``` 
+  GOOGLE_CLIENT_ID=client_ID_here
+  GOOGLE_CLIENT_SECRET=client_secret_here
+  GOOGLE_REDIRECT_URL=http://localhost:3007/auth/google/callback 
+  ```
+
+4. Run 'redis-server' in a terminal, followed by 'npm run start' in another terminal window
+5. Go to browser and navigate to http://localhost:3007/ to sign in with Google 
